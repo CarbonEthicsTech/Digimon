@@ -16,12 +16,15 @@ export default function Main(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const userID = urlParams.get('purchaserID');
+    const wixPurchaseID = urlParams.get('wixPurchaseID');
 
 
 
     
-    async function get(){
-        const plantingResult = await plantingTable.select({filterByFormula: `{User ID} = "${userID}"`}).all();
+    async function getAll(){
+        const plantingResult = await plantingTable.select({
+            filterByFormula: `AND({User ID} = "${userID}", {Wix Purchase ID} = "${wixPurchaseID}")`
+        }).all();
         if(plantingResult.length > 0){
             plantingResult.map(async (row) => {
                 getGroupUpdate(row.fields['Group ID'])
@@ -30,7 +33,9 @@ export default function Main(){
     }
 
     async function getGroupUpdate(groupID){
-        const plantingUpdates = await updateTable.select({filterByFormula: `{Group ID} = "${groupID}"`}).all();
+        const plantingUpdates = await updateTable.select({
+            filterByFormula: `AND({Group ID} = "${groupID}", {Status} = "Active")`
+        }).all();
         if(plantingUpdates.length > 0){
             plantingUpdates.map(async (row) => {
                 console.log(row.fields)
@@ -39,7 +44,7 @@ export default function Main(){
         }
     }
 
-    get()
+    getAll()
 
     return(
         <></>
