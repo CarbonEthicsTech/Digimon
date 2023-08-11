@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Airtable from "airtable";
+import Loader from "./Loader";
+import { Grid } from '@mui/material';
 
 export default function Main(){
 
@@ -17,9 +19,8 @@ export default function Main(){
     const urlParams = new URLSearchParams(queryString);
     const userID = urlParams.get('purchaserID');
     const wixPurchaseID = urlParams.get('wixPurchaseID');
-
-
-
+    
+    const [allUpdates, setAllUpdates] = useState<any[]>([])
     
     async function getAll(){
         const plantingResult = await plantingTable.select({
@@ -33,20 +34,34 @@ export default function Main(){
     }
 
     async function getGroupUpdate(groupID){
+        let updates:any[] = []
+        
         const plantingUpdates = await updateTable.select({
             filterByFormula: `AND({Group ID} = "${groupID}", {Status} = "Active")`
         }).all();
         if(plantingUpdates.length > 0){
             plantingUpdates.map(async (row) => {
+                updates.push(row.fields)
                 console.log(row.fields)
-                
             })
         }
+
+        setAllUpdates(updates)
     }
 
-    getAll()
+    useEffect(() => {
+        getAll()
+    }, [])
 
     return(
-        <></>
+        <>
+            {allUpdates.length > 0 && 
+                <Grid container>
+                    {allUpdates.map((row) => (
+                        <Loader data={row} key={row['Record ID']}/>
+                    ))}
+                </Grid>
+            }
+        </>
     )
 }
