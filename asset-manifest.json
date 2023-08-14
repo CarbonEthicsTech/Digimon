@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Digimon/static/css/main.185c212d.css",
-    "main.js": "/Digimon/static/js/main.7168b6c7.js",
+    "main.js": "/Digimon/static/js/main.c683ff2b.js",
     "static/js/787.679d3d82.chunk.js": "/Digimon/static/js/787.679d3d82.chunk.js",
     "index.html": "/Digimon/index.html",
     "main.185c212d.css.map": "/Digimon/static/css/main.185c212d.css.map",
-    "main.7168b6c7.js.map": "/Digimon/static/js/main.7168b6c7.js.map",
+    "main.c683ff2b.js.map": "/Digimon/static/js/main.c683ff2b.js.map",
     "787.679d3d82.chunk.js.map": "/Digimon/static/js/787.679d3d82.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.185c212d.css",
-    "static/js/main.7168b6c7.js"
+    "static/js/main.c683ff2b.js"
   ]
 }
