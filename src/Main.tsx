@@ -39,7 +39,11 @@ export default function Main(){
         let updates:any[] = []
         
         const plantingUpdates = await updateTable.select({
-            filterByFormula: `AND({Batch} = "${Batch}", {Status} = "Active")`
+            filterByFormula: `AND({Batch} = "${Batch}", {Status} = "Active")`,
+            sort: [{
+                field: 'Timestamp',
+                direction: 'desc'
+            }]
         }).all();
         if(plantingUpdates.length > 0){
             plantingUpdates.map(async (row) => {
