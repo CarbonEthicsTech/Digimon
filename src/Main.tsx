@@ -22,6 +22,7 @@ export default function Main(){
     const orderNo = urlParams.get('orderNo');
     
     const [allUpdates, setAllUpdates] = useState<any[]>([])
+    const [loading, setLoading] = useState(true)
     
     async function getAll(){
         const plantingResult = await plantingTable.select({
@@ -63,13 +64,18 @@ export default function Main(){
         <>
             {allUpdates.length > 0 ? 
                 <Grid container>
-                    {allUpdates.map((row) => (
+                    {allUpdates.map((row, index) => (
                         <Loader data={row} key={row['Record ID']}/>
                     ))}
                 </Grid>
             :
-                <>
-                    <h1> No Updates Yet </h1>
+                <> 
+                    {loading ? 
+                        <h1> Loading... </h1>
+                    :
+                        <h1> No Updates Yet </h1>
+                    }
+                    
                 </>
             }
         </>

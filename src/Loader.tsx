@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 
 export default function Loader({data}){
     return(
-        <Grid item xs={12} style={{ textAlign: "left", padding: '10px', border: '1px solid #e6e6e6', margin: '20px 0', borderRadius: '4px' }}>
+        <Grid item xs={12} style={{ textAlign: "left", padding: '10px', border: '1px solid #e6e6e6', margin: '15px 0', borderRadius: '4px' }}>
             <h2>{data.Notes}</h2>
             <p>Updated on: {data.Timestamp}</p>
             {data.Attachments && 
