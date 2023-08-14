@@ -19,25 +19,27 @@ export default function Main(){
     const urlParams = new URLSearchParams(queryString);
     const userID = urlParams.get('purchaserID');
     const wixPurchaseID = urlParams.get('wixPurchaseID');
+    const orderNo = urlParams.get('orderNo');
     
     const [allUpdates, setAllUpdates] = useState<any[]>([])
     
     async function getAll(){
         const plantingResult = await plantingTable.select({
-            filterByFormula: `AND({User ID} = "${userID}", {Wix Purchase ID} = "${wixPurchaseID}")`
+            // filterByFormula: `AND({User ID} = "${userID}", {Wix Purchase ID} = "${wixPurchaseID}")`
+            filterByFormula: `{Order No} = "${orderNo}"`
         }).all();
         if(plantingResult.length > 0){
             plantingResult.map(async (row) => {
-                getGroupUpdate(row.fields['Group ID'])
+                getGroupUpdate(row.fields['Batch'])
             })
         }
     }
 
-    async function getGroupUpdate(groupID){
+    async function getGroupUpdate(Batch){
         let updates:any[] = []
         
         const plantingUpdates = await updateTable.select({
-            filterByFormula: `AND({Group ID} = "${groupID}", {Status} = "Active")`
+            filterByFormula: `AND({Batch} = "${Batch}", {Status} = "Active")`
         }).all();
         if(plantingUpdates.length > 0){
             plantingUpdates.map(async (row) => {
@@ -55,12 +57,16 @@ export default function Main(){
 
     return(
         <>
-            {allUpdates.length > 0 && 
+            {allUpdates.length > 0 ? 
                 <Grid container>
                     {allUpdates.map((row) => (
                         <Loader data={row} key={row['Record ID']}/>
                     ))}
                 </Grid>
+            :
+                <>
+                    <h1> No Updates Yet </h1>
+                </>
             }
         </>
     )
