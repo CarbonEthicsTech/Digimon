@@ -6,10 +6,10 @@ import { Grid } from '@mui/material';
 export default function Main(){
 
     // test credentials
-    const apiKey = "patErOOEz4zFVzvIO.a57ea0d9421eaaae1e774535e7bdec9191c6300a150654d560a5513b41337369"
-    const baseKey = "appCcRYgO820YdHKB"
-    const plantingTableKey = "tblGqpiBl267bBNJg"
-    const updateTableKey = "tblgnhwYhLUieEot9"
+    const apiKey = process.env.REACT_APP_AIRTABLE_API_KEY
+    const baseKey = process.env.REACT_APP_BASE_KEY!
+    const plantingTableKey = process.env.REACT_APP_PLANTING_TABLE_KEY!
+    const updateTableKey = process.env.REACT_APP_GROUP_TABLE_KEY!
 
     const airtable = new Airtable({ apiKey: apiKey }).base(baseKey)
     const plantingTable = airtable(plantingTableKey)
